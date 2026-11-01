@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaheen Model Higher Secondary School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Source+Serif+4:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --chalk-green: #2F4F3D;
+    --parchment: #F2E9D8;
+    --pencil-yellow: #E8B923;
+    --brick: #B5482A;
+    --ink: #1C1C1C;
+    --cream: #FAF6EC;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ---------- TOP NAV ---------- */
+  .topnav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:var(--chalk-green);
+    color:var(--parchment);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:1rem 6vw;
+    flex-wrap:wrap;
+    gap:0.8rem;
+  }
+  .topnav .brand{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.05rem;
+    color:var(--pencil-yellow);
+  }
+  .topnav .links{display:flex; gap:0.6rem;}
+  .topnav button{
+    font-family:'Space Mono', monospace;
+    font-size:0.8rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    background:transparent;
+    border:1px solid rgba(242,233,216,0.35);
+    color:var(--parchment);
+    padding:0.55rem 1.1rem;
+    border-radius:2px;
+    cursor:pointer;
+    transition:background 0.2s ease;
+  }
+  .topnav button.active{
+    background:var(--pencil-yellow);
+    color:var(--ink);
+    border-color:var(--pencil-yellow);
+  }
+  .topnav button:hover{background:rgba(242,233,216,0.12);}
+  .topnav button.active:hover{background:var(--pencil-yellow);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ================= HERO / TOUR ================= */
+  .hero{
+    min-height:80vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    padding:8vh 8vw;
+    background:var(--chalk-green);
+    color:var(--parchment);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:radial-gradient(circle at 20px 20px, rgba(242,233,216,0.05) 2px, transparent 2px);
+    background-size:34px 34px;
+    pointer-events:none;
+  }
+  .hero-eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.85rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--pencil-yellow);
+    margin-bottom:1.4rem;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(2.2rem, 7vw, 5rem);
+    line-height:1.05;
+    margin:0 0 1.5rem 0;
+    max-width:14ch;
+  }
+  .hero h1 em{font-style:italic; font-weight:400; color:var(--pencil-yellow);}
+  .hero p{
+    font-size:clamp(1rem, 2vw, 1.2rem);
+    max-width:46ch;
+    line-height:1.6;
+    color:rgba(242,233,216,0.85);
+    margin:0 0 2.2rem 0;
+  }
+  .hero-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:0.6rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.9rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    background:var(--pencil-yellow);
+    color:var(--ink);
+    padding:0.85rem 1.5rem;
+    border-radius:2px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hero-cta:hover{transform:translateY(-2px); box-shadow:0 6px 0 rgba(0,0,0,0.15);}
+
+  .tour{max-width:1000px; margin:0 auto; padding:5rem 6vw 7rem; position:relative;}
+  .tour-intro{text-align:center; max-width:56ch; margin:0 auto 4.5rem;}
+  .tour-intro .label{
+    font-family:'Space Mono', monospace;
+    font-size:0.8rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--brick);
+  }
+  .tour-intro h2{
+    font-family:'Fraunces', serif;
+    font-size:clamp(1.7rem, 4vw, 2.4rem);
+    font-weight:600;
+    margin:0.6rem 0 0;
+  }
+
+  .stop{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:3.5rem;
+    align-items:center;
+    margin-bottom:5.5rem;
+  }
+  .stop:nth-child(even) .stop-copy{order:2;}
+  .stop:nth-child(even) .stop-visual{order:1;}
+  .stop-copy .stop-eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.75rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--brick);
+    margin-bottom:0.5rem;
+    display:block;
+  }
+  .stop-copy h3{
+    font-family:'Fraunces', serif;
+    font-size:clamp(1.3rem, 3vw, 1.8rem);
+    font-weight:600;
+    margin:0 0 0.8rem;
+  }
+  .stop-copy p{font-size:1rem; line-height:1.7; color:#3a3a3a; margin:0 0 0.9rem;}
+  .stop-copy .stop-note{
+    font-family:'Space Mono', monospace;
+    font-size:0.78rem;
+    color:var(--chalk-green);
+    background:rgba(47,79,61,0.08);
+    display:inline-block;
+    padding:0.3rem 0.7rem;
+    border-radius:2px;
+  }
+  .stop-visual{
+    aspect-ratio:4/3;
+    border-radius:4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  }
+  .stop-visual svg{width:60%; height:60%;}
+  .stop-visual.library{background:#E4DCC6;}
+  .stop-visual.lab{background:#DCE7DF;}
+  .stop-visual.field{background:#EAD9BE;}
+  .stop-visual.studio{background:#F0DCCF;}
+  .stop-visual.hall{background:#DEE2E9;}
+
+  @media (max-width:760px){
+    .stop{grid-template-columns:1fr; gap:1.2rem;}
+    .stop:nth-child(even) .stop-copy{order:1;}
+    .stop:nth-child(even) .stop-visual{order:2;}
+  }
+
+  .closing{background:var(--ink); color:var(--parchment); padding:6rem 8vw; text-align:center;}
+  .closing h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:clamp(1.7rem, 5vw, 2.6rem);
+    max-width:20ch;
+    margin:0 auto 1.4rem;
+  }
+  .closing p{max-width:48ch; margin:0 auto 2.2rem; color:rgba(242,233,216,0.75); line-height:1.6;}
+  .closing-actions{display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;}
+  .btn{
+    font-family:'Space Mono', monospace;
+    font-size:0.85rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:0.85rem 1.5rem;
+    border-radius:2px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-fill{background:var(--pencil-yellow); color:var(--ink);}
+  .btn-outline{border:1px solid rgba(242,233,216,0.4); color:var(--parchment); background:transparent;}
+
+  /* ================= STUDENT DIRECTORY ================= */
+  .directory{max-width:900px; margin:0 auto; padding:4rem 6vw 6rem;}
+  .directory-intro{text-align:center; max-width:56ch; margin:0 auto 2.5rem;}
+  .directory-intro .label{
+    font-family:'Space Mono', monospace;
+    font-size:0.8rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--brick);
+  }
+  .directory-intro h2{
+    font-family:'Fraunces', serif;
+    font-size:clamp(1.7rem, 4vw, 2.4rem);
+    font-weight:600;
+    margin:0.6rem 0 0;
+  }
+  .search-row{
+    display:flex;
+    gap:0.7rem;
+    margin-bottom:1.8rem;
+    flex-wrap:wrap;
+  }
+  .search-row input, .search-row select{
+    font-family:'Source Serif 4', serif;
+    font-size:0.95rem;
+    padding:0.7rem 1rem;
+    border:1px solid #ddd;
+    border-radius:3px;
+    background:#fff;
+  }
+  .search-row input{flex:1; min-width:180px;}
+
+  .roster{
+    display:flex;
+    flex-direction:column;
+    border:1px solid #e6e0d2;
+    border-radius:6px;
+    overflow:hidden;
+    background:#fff;
+  }
+  .roster-row{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+    padding:0.9rem 1.2rem;
+    border-bottom:1px solid #f0ece0;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .roster-row:last-child{border-bottom:none;}
+  .roster-row:hover{background:var(--cream);}
+  .roster-avatar{
+    width:40px; height:40px;
+    border-radius:50%;
+    background:var(--parchment);
+    border:2px solid var(--chalk-green);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .roster-avatar svg{width:60%; height:60%; color:var(--chalk-green);}
+  .roster-info{flex:1; min-width:0;}
+  .roster-name{font-weight:600; font-size:0.98rem;}
+  .roster-class{
+    font-family:'Space Mono', monospace;
+    font-size:0.75rem;
+    color:var(--brick);
+  }
+  .roster-arrow{color:#bbb; font-size:1.1rem;}
+
+  .empty-state{
+    text-align:center;
+    padding:2rem;
+    color:#999;
+    font-family:'Space Mono', monospace;
+    font-size:0.85rem;
+  }
+
+  /* ---- profile modal ---- */
+  .overlay{
+    position:fixed; inset:0;
+    background:rgba(28,28,28,0.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:5vh 5vw;
+    z-index:100;
+  }
+  .overlay.active{display:flex;}
+  .profile-card{
+    background:#fff;
+    border-radius:6px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.2);
+    max-width:440px;
+    width:100%;
+    padding:2.2rem 2rem;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+  .profile-close{
+    position:absolute;
+    top:0.9rem; right:1rem;
+    background:none; border:none;
+    font-size:1.3rem;
+    cursor:pointer;
+    color:#999;
+    line-height:1;
+  }
+  .profile-avatar{
+    width:120px; height:120px;
+    border-radius:50%;
+    background:var(--parchment);
+    border:3px solid var(--chalk-green);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:1.2rem;
+  }
+  .profile-avatar svg{width:70%; height:70%; color:var(--chalk-green);}
+  .profile-name{font-family:'Fraunces', serif; font-weight:600; font-size:1.5rem; margin:0 0 0.3rem;}
+  .profile-class{
+    font-family:'Space Mono', monospace;
+    font-size:0.78rem;
+    background:rgba(47,79,61,0.08);
+    color:var(--chalk-green);
+    padding:0.25rem 0.7rem;
+    border-radius:2px;
+    margin-bottom:1.4rem;
+  }
+  .profile-details{width:100%; text-align:left; border-top:1px solid #eee; padding-top:1.2rem; display:flex; flex-direction:column; gap:0.8rem;}
+  .profile-row{display:flex; justify-content:space-between; gap:1rem; font-size:0.92rem;}
+  .profile-label{
+    font-family:'Space Mono', monospace;
+    font-size:0.7rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#888;
+    white-space:nowrap;
+  }
+  .profile-value{text-align:right;}
+
+  footer{
+    background:var(--ink);
+    color:rgba(242,233,216,0.45);
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:0.75rem;
+    padding:1.5rem;
+    border-top:1px solid rgba(242,233,216,0.1);
+  }
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--pencil-yellow); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="brand">Shaheen Model Higher Secondary School</div>
+  <div class="links">
+    <button id="navTour" class="active">Campus Tour</button>
+    <button id="navStudents">Students</button>
+  </div>
+</nav>
+
+<!-- ================= CAMPUS TOUR VIEW ================= -->
+<div id="viewTour" class="view active">
+  <section class="hero">
+    <div class="hero-eyebrow">Shaheen Model Higher Secondary School · Mirpur Mathelo</div>
+    <h1>A look <em>inside</em> our campus.</h1>
+    <p>A self-guided look at where our students spend their days — the library, the labs, the field, the studio, and the hallway in between.</p>
+    <button class="hero-cta" onclick="document.getElementById('tourStops').scrollIntoView({behavior:'smooth'})">Start the tour ↓</button>
+  </section>
+
+  <section class="tour" id="tourStops">
+    <div class="tour-intro">
+      <span class="label">The route</span>
+      <h2>Five stops around campus</h2>
+    </div>
+
+    <div class="stop">
+      <div class="stop-copy">
+        <span class="stop-eyebrow">First stop</span>
+        <h3>The Library</h3>
+        <p>Twelve thousand books, a reading loft under the skylight, and a standing rule: if you can find a quieter corner, it's yours for the year.</p>
+        <span class="stop-note">Open 7:30am – 5:30pm</span>
+      </div>
+      <div class="stop-visual library">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#2F4F3D" stroke-width="2.5">
+          <rect x="20" y="30" width="8" height="45"/><rect x="32" y="20" width="8" height="55"/>
+          <rect x="44" y="35" width="8" height="40"/><rect x="56" y="25" width="8" height="50"/>
+          <rect x="68" y="40" width="8" height="35"/><line x1="15" y1="78" x2="85" y2="78"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-copy">
+        <span class="stop-eyebrow">Second stop</span>
+        <h3>The Science Labs</h3>
+        <p>Three labs share one long bench of sinks and burners. Students grow crystals here in week one; by the final year, some run their own research projects.</p>
+        <span class="stop-note">Room 114–116</span>
+      </div>
+      <div class="stop-visual lab">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#2F4F3D" stroke-width="2.5">
+          <path d="M40 20h20v25l15 30a5 5 0 0 1-4.5 7H29.5a5 5 0 0 1-4.5-7l15-30z"/>
+          <line x1="35" y1="60" x2="65" y2="60"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-copy">
+        <span class="stop-eyebrow">Third stop</span>
+        <h3>The Playing Field</h3>
+        <p>Cricket and athletics take turns on this field, with a scoreboard that has clocked more matches than anyone can count.</p>
+        <span class="stop-note">Home to school sports teams</span>
+      </div>
+      <div class="stop-visual field">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#2F4F3D" stroke-width="2.5">
+          <rect x="15" y="25" width="70" height="50"/><circle cx="50" cy="50" r="12"/>
+          <line x1="50" y1="25" x2="50" y2="75"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-copy">
+        <span class="stop-eyebrow">Fourth stop</span>
+        <h3>The Art Studio</h3>
+        <p>North-facing windows, paint-splattered floors, and a hallway gallery that rotates every term.</p>
+        <span class="stop-note">Open studio hours after 3pm</span>
+      </div>
+      <div class="stop-visual studio">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#2F4F3D" stroke-width="2.5">
+          <ellipse cx="50" cy="55" rx="28" ry="18" transform="rotate(-20 50 55)"/>
+          <circle cx="38" cy="48" r="3"/><circle cx="50" cy="44" r="3"/><circle cx="60" cy="52" r="3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-copy">
+        <span class="stop-eyebrow">Last stop</span>
+        <h3>The Main Hallway</h3>
+        <p>Every stop connects back here. Lockers on one side, class photos on the other, and the loudest four minutes of every school day.</p>
+        <span class="stop-note">Passing period: 4 minutes</span>
+      </div>
+      <div class="stop-visual hall">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#2F4F3D" stroke-width="2.5">
+          <path d="M20 80 L40 30 L60 30 L80 80"/><line x1="30" y1="60" x2="70" y2="60"/><line x1="35" y1="70" x2="65" y2="70"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <h2>See it in person</h2>
+    <p>Tours run weekday mornings and by appointment. Bring your questions — we'll bring the tea.</p>
+    <div class="closing-actions">
+      <a class="btn btn-fill" href="#tourStops">Book a visit</a>
+      <button class="btn btn-outline" onclick="document.getElementById('navStudents').click()">View student directory</button>
+    </div>
+  </section>
+</div>
+
+<!-- ================= STUDENT DIRECTORY VIEW ================= -->
+<div id="viewStudents" class="view">
+  <section class="directory">
+    <div class="directory-intro">
+      <span class="label">Student records</span>
+      <h2>Student Directory</h2>
+    </div>
+
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Search by name...">
+      <select id="classFilter">
+        <option value="">All classes</option>
+      </select>
+    </div>
+
+    <div class="roster" id="roster"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">No students match your search.</div>
+  </section>
+
+  <footer>Shaheen Model Higher Secondary School &middot; Mirpur Mathelo</footer>
+</div>
+
+<!-- ---- profile modal ---- -->
+<div class="overlay" id="overlay">
+  <div class="profile-card">
+    <button class="profile-close" id="closeProfile">✕</button>
+    <div class="profile-avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2F4F3D" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    </div>
+    <div class="profile-name" id="pName">—</div>
+    <div class="profile-class" id="pClass">—</div>
+    <div class="profile-details">
+      <div class="profile-row"><span class="profile-label">CNIC</span><span class="profile-value" id="pCnic">—</span></div>
+      <div class="profile-row"><span class="profile-label">Phone</span><span class="profile-value" id="pPhone">—</span></div>
+      <div class="profile-row"><span class="profile-label">Address</span><span class="profile-value" id="pAddress">—</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ---- nav switching ---- */
+  const navTour = document.getElementById('navTour');
+  const navStudents = document.getElementById('navStudents');
+  const viewTour = document.getElementById('viewTour');
+  const viewStudents = document.getElementById('viewStudents');
+
+  function showTour(){
+    navTour.classList.add('active'); navStudents.classList.remove('active');
+    viewTour.classList.add('active'); viewStudents.classList.remove('active');
+    window.scrollTo({top:0});
+  }
+  function showStudents(){
+    navStudents.classList.add('active'); navTour.classList.remove('active');
+    viewStudents.classList.add('active'); viewTour.classList.remove('active');
+    window.scrollTo({top:0});
+  }
+  navTour.addEventListener('click', showTour);
+  navStudents.addEventListener('click', showStudents);
+
+  /* ---- sample roster data (50 placeholder students) ---- */
+  const classes = ["IX-A","IX-B","X-A","X-B","XI-A","XI-B","XII-A","XII-B"];
+  const students = [];
+  for(let i=1;i<=52;i++){
+    students.push({
+      name: `Sample Student ${i}`,
+      cls: classes[i % classes.length],
+      cnic: "XXXXX-XXXXXXX-X",
+      phone: "0300-0000000",
+      address: "Mirpur Mathelo, Sindh"
+    });
+  }
+
+  /* populate class filter */
+  const classFilter = document.getElementById('classFilter');
+  classes.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = `Class ${c}`;
+    classFilter.appendChild(opt);
+  });
+
+  const rosterEl = document.getElementById('roster');
+  const emptyState = document.getElementById('emptyState');
+  const searchInput = document.getElementById('searchInput');
+
+  function renderRoster(){
+    const q = searchInput.value.trim().toLowerCase();
+    const cf = classFilter.value;
+    const filtered = students.filter(s=>
+      (!q || s.name.toLowerCase().includes(q)) &&
+      (!cf || s.cls === cf)
+    );
+    rosterEl.innerHTML = '';
+    if(filtered.length === 0){
+      emptyState.style.display = 'block';
+    } else {
+      emptyState.style.display = 'none';
+      filtered.forEach(s=>{
+        const row = document.createElement('div');
+        row.className = 'roster-row';
+        row.innerHTML = `
+          <div class="roster-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <div class="roster-info">
+            <div class="roster-name">${s.name}</div>
+            <div class="roster-class">Class ${s.cls}</div>
+          </div>
+          <div class="roster-arrow">›</div>
+        `;
+        row.addEventListener('click',
